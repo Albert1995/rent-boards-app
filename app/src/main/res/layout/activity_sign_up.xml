@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controller.SignUpActivity"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/signup"
+        android:textSize="30sp"
+        android:layout_marginBottom="40dp"
+        />
+
+    <!--<EditText
+        android:id="@+id/txtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/name"
+        />-->
+
+    <EditText
+        android:id="@+id/txtEmailSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        />
+
+    <!--<EditText
+        android:id="@+id/txtCellphone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/cellphone"
+        />-->
+
+    <EditText
+        android:id="@+id/txtPasswordSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        />
+
+
+    <EditText
+        android:id="@+id/txtPasswordConfirmationSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/password_confirmation"
+        android:inputType="textPassword"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:id="@+id/btnConfirmSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signup"
+            android:onClick="btnConfirmSignInOnClick"
+            />
+
+        <Button
+            android:id="@+id/btnCancelSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:onClick="btnCancelSignInOnClick"
+            />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Rental Boardgames</string>
+
+    <string name="email">E-Mail</string>
+    <string name="password">Senha</string>
+    <string name="signin">Entrar</string>
+    <string name="signup">Cadastrar</string>
+    <string name="password_confirmation">Confirmar Senha</string>
+    <string name="cancel">Cancelar</string>
+    <string name="name">Nome</string>
+    <string name="cellphone">Celular</string>
+    <string name="signin_google">Entrar com a Conta Google</string>
+</resources>
