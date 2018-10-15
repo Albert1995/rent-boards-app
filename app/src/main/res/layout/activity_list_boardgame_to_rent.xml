@@ -4,6 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListBoardgameToRentActivity">
+    tools:context=".controller.ListBoardgameToRentActivity">
 
+    <EditText
+        android:id="@+id/txtSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listRent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/txtSearch"
+        />
 </android.support.constraint.ConstraintLayout>

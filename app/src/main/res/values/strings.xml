@@ -10,4 +10,26 @@
     <string name="name">Nome</string>
     <string name="cellphone">Celular</string>
     <string name="signin_google">Entrar com a Conta Google</string>
+    <string name="search">Pesquisar</string>
+    <string name="avalible">Disponível</string>
+    <string name="avalibles">Disponíveis</string>
+    <string name="unique_avalibles">Único Disponível</string>
+    <string name="unavalible">Indisponível</string>
+    <string name="recommended_age">Idade Recomendada:</string>
+    <string name="playing_time">Tempo Médio de Jogo:</string>
+    <string name="players">Jogadores:</string>
+    <string name="minutes">minutos</string>
+    <string name="amount_avalible">Total Disponível para Alugar:</string>
+    <string name="rent">Alugar</string>
+    <string name="confirm">Confirmar</string>
+    <string name="boardgame">Boardgame:</string>
+    <string name="rent_price">Valor do Aluguel:</string>
+    <string name="rent_total_price">Valor Total do Aluguel:</string>
+    <string name="delivery">Forma de Entrega:</string>
+    <string name="delivery_prompt">Escolha uma opção</string>
+    <string name="address">Endereço</string>
+    <string-array name="deliveries_type">
+        <item>Balcão</item>
+        <item>Motoboy</item>
+    </string-array>
 </resources>

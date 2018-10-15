@@ -4,6 +4,7 @@
     package="br.pucpr.appdev.rentalboardgames">
 
     <application
+        android:name=".CustomApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -26,7 +27,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".controller.SignUpActivity" />
-        <activity android:name=".ListBoardgameToRentActivity"></activity>
+        <activity android:name=".controller.ListBoardgameToRentActivity" />
+        <activity android:name=".controller.DetailBoardgameActivity" />
+        <activity android:name=".controller.CheckoutRentActivity"></activity>
     </application>
 
 </manifest>

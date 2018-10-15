@@ -14,12 +14,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import br.pucpr.appdev.rentalboardgames.CustomApplication;
 import br.pucpr.appdev.rentalboardgames.R;
+import br.pucpr.appdev.rentalboardgames.model.User;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int SIGN_IN_ACTIVITY = 1;
+
+    private static final String TAG = "BOARD-LOGIN";
 
     private FirebaseAuth fbAuth;
     private FirebaseUser fbUser;
@@ -35,6 +41,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         fbUser = fbAuth.getCurrentUser();
+
+        if (fbUser != null) {
+            Log.d(TAG, "onStart: Usuário já logado");
+            findUser();
+        }
+    }
+
+    private void goToListRent() {
+        Intent i = new Intent(this, ListBoardgameToRentActivity.class);
+        startActivity(i);
+        finish();
     }
 
     public void btnSignInOnClick(View v) {
@@ -49,9 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d("LOGIN-SUCCESS", "User logged");
-                            Intent i = new Intent(MainActivity.this, TestLogonFirebaseActivity.class);
-                            startActivity(i);
-                            MainActivity.this.finish();
+                            findUser();
                         } else {
                             Log.d("LOGIN-ERROR", "Wrong information");
                             Toast.makeText(MainActivity.this, "Falhou", Toast.LENGTH_LONG).show();
@@ -68,6 +83,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnSignInGoogleOnClick(View v) {
 
+    }
+
+    private void findUser() {
+        FirebaseFirestore.getInstance().collection("users")
+                .document(fbUser.getUid()).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            User user = task.getResult().toObject(User.class);
+                            user.setId(fbUser.getUid());
+                            ((CustomApplication) MainActivity.this.getApplicationContext()).setUser(user);
+                            goToListRent();
+                        } else {
+                            fbAuth.signOut();
+                        }
+                    }
+                });
     }
 
     @Override

@@ -1,17 +1,26 @@
 package br.pucpr.appdev.rentalboardgames.model;
 
-public class Boardgame {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Boardgame implements Serializable {
 
     private String id;
     private String name;
     private String description;
-    private int playersMin;
-    private int playersMax;
-
-    private int age;
-
-    private int playingTimeMin;
-    private int playingTimeMax;
+    private Integer playersMin;
+    private Integer playersMax;
+    private Integer age;
+    private Integer playingTimeMin;
+    private Integer playingTimeMax;
+    private Double rentPrice;
+    private List<Rental> rentals;
+    private String imageURL;
 
     public String getId() {
         return id;
@@ -37,43 +46,126 @@ public class Boardgame {
         this.description = description;
     }
 
-    public int getPlayersMin() {
+    public Integer getPlayersMin() {
         return playersMin;
     }
 
-    public void setPlayersMin(int playersMin) {
+    public void setPlayersMin(Integer playersMin) {
         this.playersMin = playersMin;
     }
 
-    public int getPlayersMax() {
+    public Integer getPlayersMax() {
         return playersMax;
     }
 
-    public void setPlayersMax(int playersMax) {
+    public void setPlayersMax(Integer playersMax) {
         this.playersMax = playersMax;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
-    public int getPlayingTimeMin() {
+    public Integer getPlayingTimeMin() {
         return playingTimeMin;
     }
 
-    public void setPlayingTimeMin(int playingTimeMin) {
+    public void setPlayingTimeMin(Integer playingTimeMin) {
         this.playingTimeMin = playingTimeMin;
     }
 
-    public int getPlayingTimeMax() {
+    public Integer getPlayingTimeMax() {
         return playingTimeMax;
     }
 
-    public void setPlayingTimeMax(int playingTimeMax) {
+    public void setPlayingTimeMax(Integer playingTimeMax) {
         this.playingTimeMax = playingTimeMax;
+    }
+
+    public Double getRentPrice() {
+        return rentPrice;
+    }
+
+    public void setRentPrice(Double rentPrice) {
+        this.rentPrice = rentPrice;
+    }
+
+    public List<Rental> getRentals() {
+        return rentals;
+    }
+
+    public void setRentals(List<Rental> rentals) {
+        this.rentals = rentals;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public int avalibleToRent() {
+        int count = 0;
+        for (Rental rental : rentals) {
+            if (rental.getUser() == null)
+                count++;
+        }
+        return count;
+    }
+
+    public int getRentAvailable() {
+        for (int i = 0; i < rentals.size(); i++) {
+            if (rentals.get(i).getUser() == null)
+                return i;
+        }
+        return -1;
+    }
+
+    public void newRent(User user, Date start, Date end) {
+        for (Rental rental : rentals) {
+            if (rental.getUser() == null) {
+                rental.setUser(user.getId());
+                rental.setStartDate(start);
+                rental.setEndDate(end);
+            }
+
+        }
+    }
+
+    public List<Map<String, Object>> getArrayRentals() {
+        List<Map<String, Object>> arr = new ArrayList<>();
+
+        for (Rental r : rentals) {
+            Map<String, Object> rentPositionUpdate = new HashMap<>();
+            rentPositionUpdate.put("user", r.getUser());
+            rentPositionUpdate.put("startDate", r.getStartDate());
+            rentPositionUpdate.put("endDate", r.getEndDate());
+            arr.add(rentPositionUpdate);
+        }
+
+        return arr;
+    }
+
+    @Override
+    public String toString() {
+        return "Boardgame{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", playersMin=" + playersMin +
+                ", playersMax=" + playersMax +
+                ", age=" + age +
+                ", playingTimeMin=" + playingTimeMin +
+                ", playingTimeMax=" + playingTimeMax +
+                ", rentPrice=" + rentPrice +
+                ", rentals=" + rentals +
+                ", imageURL='" + imageURL + '\'' +
+                '}';
     }
 }
