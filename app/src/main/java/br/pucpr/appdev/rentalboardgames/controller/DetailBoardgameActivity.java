@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,20 +25,30 @@ public class DetailBoardgameActivity extends AppCompatActivity {
 
     FirebaseFirestore db;
     Boardgame boardgame;
+    ImageView img;
+    TextView title;
+    TextView description;
+    TextView rentPrice;
+    TextView age;
+    TextView playingTime;
+    TextView players;
+    TextView amount;
+    Button btnRent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_boardgame);
 
-        final ImageView img = findViewById(R.id.imgBoardgameDetail);
-        final TextView title = findViewById(R.id.lblTitleDetail);
-        final TextView description = findViewById(R.id.lblDescriptionDetail);
-        final TextView rentPrice = findViewById(R.id.lblRentValueDetail);
-        final TextView age = findViewById(R.id.lblAgeDetail);
-        final TextView playingTime = findViewById(R.id.lblPlayingTimeDetail);
-        final TextView players = findViewById(R.id.lblPlayersDetail);
-        final TextView amount = findViewById(R.id.lblAmountAvalibleDetail);
+        img = findViewById(R.id.imgBoardgameDetail);
+        title = findViewById(R.id.lblTitleDetail);
+        description = findViewById(R.id.lblDescriptionDetail);
+        rentPrice = findViewById(R.id.lblRentValueDetail);
+        age = findViewById(R.id.lblAgeDetail);
+        playingTime = findViewById(R.id.lblPlayingTimeDetail);
+        players = findViewById(R.id.lblPlayersDetail);
+        amount = findViewById(R.id.lblAmountAvalibleDetail);
+        btnRent = findViewById(R.id.btnRent);
 
         setTitle("Detalhe do Boardgame");
 
@@ -68,6 +79,8 @@ public class DetailBoardgameActivity extends AppCompatActivity {
                     players.setText(String.format("%d", boardgame.getPlayersMin()));
                 else
                     players.setText(String.format("%d - %d", boardgame.getPlayersMin(), boardgame.getPlayersMax()));
+
+                btnRent.setVisibility(boardgame.avalibleToRent() > 0 ? View.VISIBLE : View.GONE);
 
             }
         });

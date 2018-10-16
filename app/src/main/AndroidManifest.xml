@@ -21,15 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.TestLogonFirebaseActivity">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity android:name=".controller.SignUpActivity" />
-        <activity android:name=".controller.ListBoardgameToRentActivity" />
+        <activity android:name=".controller.ListBoardgameToRentActivity" android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop">
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable" />
+
+        </activity>
         <activity android:name=".controller.DetailBoardgameActivity" />
-        <activity android:name=".controller.CheckoutRentActivity"></activity>
+        <activity android:name=".controller.CheckoutRentActivity" />
     </application>
 
 </manifest>

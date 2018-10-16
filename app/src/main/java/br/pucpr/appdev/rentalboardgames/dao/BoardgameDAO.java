@@ -40,8 +40,6 @@ public class BoardgameDAO {
         db = FirebaseFirestore.getInstance();
     }
 
-
-
     public void populate(final List<Boardgame> list, final RecyclerView.Adapter adapter) {
         Log.d(TAG, "populate: iniciando coleta");
 
@@ -51,7 +49,7 @@ public class BoardgameDAO {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         Log.d(TAG, "onComplete: Board recuperado = " + doc.getData());
-                        Boardgame b = new Boardgame();
+                        /*Boardgame b = new Boardgame();
                         b.setId(doc.getId());
                         b.setAge(doc.getLong(COL_AGE).intValue());
                         b.setDescription(doc.getString(COL_DESCRIPTION));
@@ -59,8 +57,8 @@ public class BoardgameDAO {
                         b.setPlayersMin(doc.getLong(COL_PLAYERS_MIN).intValue());
                         b.setPlayersMax(doc.getLong(COL_PLAYERS_MAX).intValue());
                         b.setPlayingTimeMin(doc.getLong(COL_PLAYING_TIME_MIN).intValue());
-                        b.setPlayingTimeMax(doc.getLong(COL_PLAYING_TIME_MAX).intValue());
-
+                        b.setPlayingTimeMax(doc.getLong(COL_PLAYING_TIME_MAX).intValue());*/
+                        Boardgame b = doc.toObject(Boardgame.class);
                         list.add(b);
                     }
                     adapter.notifyDataSetChanged();

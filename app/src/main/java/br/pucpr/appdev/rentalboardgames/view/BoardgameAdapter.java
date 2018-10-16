@@ -1,44 +1,47 @@
 package br.pucpr.appdev.rentalboardgames.view;
 
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.pucpr.appdev.rentalboardgames.R;
 import br.pucpr.appdev.rentalboardgames.model.Boardgame;
 
-public class BoardgameAdapter extends FirestoreRecyclerAdapter<Boardgame, BoardgameAdapter.BoardgameHolder> {
+public class BoardgameAdapter
+        //extends FirestoreRecyclerAdapter<Boardgame, BoardgameAdapter.BoardgameHolder>
+        extends RecyclerView.Adapter<BoardgameAdapter.BoardgameHolder>
+        implements Filterable {
 
     private static final String TAG = "BOARD-ADAPTER";
     private List<Boardgame> boardgames;
 
-    /**
-     * Create a new RecyclerView adapter that listens to a Firestore Query.  See
-     * {@link FirestoreRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
-    public BoardgameAdapter(FirestoreRecyclerOptions<Boardgame> options) {
+    /*public BoardgameAdapter(FirestoreRecyclerOptions<Boardgame> options) {
         super(options);
+        boardgames = new ArrayList<>();
+    }*/
+
+    public BoardgameAdapter(List<Boardgame> boardgames) {
+        this.boardgames = boardgames;
     }
 
-    @Override
+    //@Override
     protected void onBindViewHolder(BoardgameHolder holder, int position, Boardgame model) {
         Log.d(TAG, "onBindViewHolder: " + model.toString());
         holder.lblTitle.setText(model.getName());
@@ -56,10 +59,10 @@ public class BoardgameAdapter extends FirestoreRecyclerAdapter<Boardgame, Boardg
         Glide.with(holder.itemView.getContext()).using(new FirebaseImageLoader()).load(image).into(holder.imgBoardgame);
     }
 
-    public String getModelId(int position) {
+    /*public String getModelId(int position) {
         DocumentSnapshot snap = getSnapshots().getSnapshot(position);
         return snap.getId();
-    }
+    }*/
 
     @Override
     public BoardgameHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -68,8 +71,38 @@ public class BoardgameAdapter extends FirestoreRecyclerAdapter<Boardgame, Boardg
     }
 
     @Override
-    public void onError(FirebaseFirestoreException e) {
-        super.onError(e);
+    public void onBindViewHolder(@NonNull BoardgameHolder holder, int position) {
+        onBindViewHolder(holder, position, boardgames.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return boardgames.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<Boardgame> filtered = new ArrayList<>();
+                for (Boardgame snap : boardgames) {
+                    if (snap.getName().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                        filtered.add(snap);
+                    }
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filtered;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                boardgames = (List<Boardgame>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     class BoardgameHolder extends RecyclerView.ViewHolder {

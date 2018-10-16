@@ -48,6 +48,7 @@
             app:layout_constraintRight_toRightOf="parent"
             android:text="@string/rent"
             android:onClick="btnRentOnClick"
+            android:visibility="gone"
             />
 
     </android.support.constraint.ConstraintLayout>
