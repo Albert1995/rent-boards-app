@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/account"
-        android:title="My Account"/>
+    <item android:id="@+id/myAccount"
+        android:title="@string/my_account"/>
+    <item android:id="@+id/lends"
+        android:title="@string/lends"/>
     <item android:id="@+id/settings"
-        android:title="Settings"/>
-    <item android:id="@+id/mycart"
-        android:title="My Cart"/>
+        android:title="@string/settings"/>
+    <item android:id="@+id/signout"
+        android:title="@string/signout"/>
 
 </menu>

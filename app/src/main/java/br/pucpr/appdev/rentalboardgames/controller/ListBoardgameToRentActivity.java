@@ -1,5 +1,7 @@
 package br.pucpr.appdev.rentalboardgames.controller;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,9 +17,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.SearchView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -47,6 +51,7 @@ public class ListBoardgameToRentActivity extends AppCompatActivity {
     LinearLayoutManager manager;
     GestureDetector gd;
     List<Boardgame> boardgames;
+    SearchView searchView;
 
     private int currentPage = 0;
 
@@ -66,7 +71,7 @@ public class ListBoardgameToRentActivity extends AppCompatActivity {
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
                 View view = listRent.findChildViewUnder(e.getX(), e.getY());
-                String id = boardgames.get((int) listRent.getChildItemId(view)).getId();
+                String id = boardgames.get(listRent.getChildAdapterPosition(view)).getId();
                 Log.d(TAG, "onSingleTapConfirmed: clicado no objeto de id " + id);
                 Intent i = new Intent(ListBoardgameToRentActivity.this, DetailBoardgameActivity.class);
                 i.putExtra("boardgameId", id);
@@ -74,7 +79,6 @@ public class ListBoardgameToRentActivity extends AppCompatActivity {
                 return true;
             }
         });
-
 
     }
 
@@ -91,10 +95,20 @@ public class ListBoardgameToRentActivity extends AppCompatActivity {
                     return;
                 }
 
-                for (DocumentSnapshot document : queryDocumentSnapshots) {
-                    Boardgame b = document.toObject(Boardgame.class);
-                    b.setId(document.getId());
-                    boardgames.add(b);
+                for (DocumentChange change : queryDocumentSnapshots.getDocumentChanges()) {
+                    Boardgame b = change.getDocument().toObject(Boardgame.class);
+                    switch(change.getType()) {
+                        case ADDED:
+                            b.setId(change.getDocument().getId());
+                            boardgames.add(b);
+                            break;
+                        case MODIFIED:
+                            boardgames.set(boardgames.indexOf(b), b);
+                            break;
+                        case REMOVED:
+                            boardgames.remove(b);
+                            break;
+                    }
                 }
                 if (adapter == null) {
                     adapter = new BoardgameAdapter(boardgames);
@@ -123,10 +137,11 @@ public class ListBoardgameToRentActivity extends AppCompatActivity {
 
     private void setUpDrawer() {
         toolbar = findViewById(R.id.toolbarList);
+        setSupportActionBar(toolbar);
+
         drawer = findViewById(R.id.drawerMenu);
         drawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open_drawer, R.string.close_drawer);
 
-        setSupportActionBar(toolbar);
         drawer.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
     }
@@ -165,41 +180,35 @@ public class ListBoardgameToRentActivity extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.search_list, menu);
 
-        /*SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.d(TAG, "onQueryTextSubmit: Procurando boards com nome " + query + ".........");
-                Query q = db.collection("boardgames");
-                FirestoreRecyclerOptions<Boardgame> optionsSearch = new FirestoreRecyclerOptions.Builder<Boardgame>()
-                        .setQuery(q, Boardgame.class)
-                        .build();
-                BoardgameAdapter adapterSearch = new BoardgameAdapter(optionsSearch);
-
-                listRent.setAdapter(adapterSearch);
-                adapterSearch.startListening();
-                adapterSearch.stopListening();
+                adapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextChange(String query) {
+                adapter.getFilter().filter(query);
                 return false;
             }
         });
 
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                listRent.setAdapter(adapter);
-                return false;
-            }
-        });*/
-
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        // close search view on back button pressed
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override

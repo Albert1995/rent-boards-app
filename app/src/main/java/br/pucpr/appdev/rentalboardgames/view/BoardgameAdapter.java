@@ -2,7 +2,6 @@ package br.pucpr.appdev.rentalboardgames.view;
 
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,23 +24,17 @@ import br.pucpr.appdev.rentalboardgames.R;
 import br.pucpr.appdev.rentalboardgames.model.Boardgame;
 
 public class BoardgameAdapter
-        //extends FirestoreRecyclerAdapter<Boardgame, BoardgameAdapter.BoardgameHolder>
         extends RecyclerView.Adapter<BoardgameAdapter.BoardgameHolder>
         implements Filterable {
 
     private static final String TAG = "BOARD-ADAPTER";
-    private List<Boardgame> boardgames;
-
-    /*public BoardgameAdapter(FirestoreRecyclerOptions<Boardgame> options) {
-        super(options);
-        boardgames = new ArrayList<>();
-    }*/
+    private List<Boardgame> boardgames, boardgamesFiltered;
 
     public BoardgameAdapter(List<Boardgame> boardgames) {
         this.boardgames = boardgames;
+        this.boardgamesFiltered = boardgames;
     }
 
-    //@Override
     protected void onBindViewHolder(BoardgameHolder holder, int position, Boardgame model) {
         Log.d(TAG, "onBindViewHolder: " + model.toString());
         holder.lblTitle.setText(model.getName());
@@ -59,11 +52,6 @@ public class BoardgameAdapter
         Glide.with(holder.itemView.getContext()).using(new FirebaseImageLoader()).load(image).into(holder.imgBoardgame);
     }
 
-    /*public String getModelId(int position) {
-        DocumentSnapshot snap = getSnapshots().getSnapshot(position);
-        return snap.getId();
-    }*/
-
     @Override
     public BoardgameHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.boardgame_item, parent, false);
@@ -72,12 +60,12 @@ public class BoardgameAdapter
 
     @Override
     public void onBindViewHolder(@NonNull BoardgameHolder holder, int position) {
-        onBindViewHolder(holder, position, boardgames.get(position));
+        onBindViewHolder(holder, position, boardgamesFiltered.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return boardgames.size();
+        return boardgamesFiltered.size();
     }
 
     @Override
@@ -86,11 +74,14 @@ public class BoardgameAdapter
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 List<Boardgame> filtered = new ArrayList<>();
-                for (Boardgame snap : boardgames) {
-                    if (snap.getName().toLowerCase().contains(constraint.toString().toLowerCase())) {
-                        filtered.add(snap);
+                if (constraint == null || constraint.toString().isEmpty())
+                    filtered = boardgames;
+                else
+                    for (Boardgame snap : boardgames) {
+                        if (snap.getName().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                            filtered.add(snap);
+                        }
                     }
-                }
 
                 FilterResults results = new FilterResults();
                 results.values = filtered;
@@ -99,7 +90,7 @@ public class BoardgameAdapter
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                boardgames = (List<Boardgame>) results.values;
+                boardgamesFiltered = (List<Boardgame>) results.values;
                 notifyDataSetChanged();
             }
         };
