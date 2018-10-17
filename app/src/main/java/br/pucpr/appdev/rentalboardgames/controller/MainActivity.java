@@ -18,6 +18,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import br.pucpr.appdev.rentalboardgames.CustomApplication;
+import br.pucpr.appdev.rentalboardgames.ListBoardgames;
 import br.pucpr.appdev.rentalboardgames.R;
 import br.pucpr.appdev.rentalboardgames.model.User;
 
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goToListRent() {
-        Intent i = new Intent(this, ListBoardgameToRentActivity.class);
+        Intent i = new Intent(this, ListBoardgames.class);
         startActivity(i);
         finish();
     }
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d("LOGIN-SUCCESS", "User logged");
+                            fbUser = fbAuth.getCurrentUser();
                             findUser();
                         } else {
                             Log.d("LOGIN-ERROR", "Wrong information");

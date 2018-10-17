@@ -46,4 +46,19 @@
     <string name="lends">Empréstimos</string>
     <string name="my_account">Minha Conta</string>
     <string name="settings">Configurações</string>
+    <string name="order_by_name_az">Ordernar por Nome</string>
+    <string name="order_by_price_asc">Ordernar por Preço Crescente</string>
+    <string name="order_by_price_desc">Ordernar por Preço Decrescente</string>
+    <string name="order_title">Ordernar</string>
+    <string-array name="order_array">
+        <item>Nome de A a Z</item>
+        <item>Nome de Z a A</item>
+        <item>Preço Crescente</item>
+        <item>Preço Decrescente</item>
+    </string-array>
+    <string name="title_activity_lends">LendsActivity</string>
+    <string name="tab_text_1">Meus Empréstimos</string>
+    <string name="tab_text_2">Histórico</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

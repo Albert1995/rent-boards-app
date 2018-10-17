@@ -1,13 +1,14 @@
 package br.pucpr.appdev.rentalboardgames.model;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class User {
 
     private String id;
     private String name;
     private String email;
-    private Lending lending;
+    private List<Lending> lendings;
 
     public String getId() {
         return id;
@@ -33,21 +34,23 @@ public class User {
         this.email = email;
     }
 
-    public Lending getLending() {
-        return lending;
+    public List<Lending> getLendings() {
+        return lendings;
     }
 
-    public void setLending(Lending lending) {
-        this.lending = lending;
+    public void setLendings(List<Lending> lendings) {
+        this.lendings = lendings;
     }
 
-    public void newLending(Boardgame boardgame, Calendar startDate, Calendar endDate) {
-        if (lending == null)
-            lending = new Lending();
-
-        lending.setBoardgame(boardgame.getId());
-        lending.setStartDate(startDate.getTime());
-        lending.setEndDate(endDate.getTime());
+    public void newLending(Boardgame boardgame, Calendar startDate, Calendar endDate, double totalRentValue) {
+        for (Lending l : lendings) {
+            if (l.getBoardgame() == null) {
+                l.setBoardgameObj(boardgame);
+                l.setStartDate(startDate.getTime());
+                l.setEndDate(endDate.getTime());
+                l.setTotalRentValue(totalRentValue);
+            }
+        }
     }
 
     @Override
@@ -56,7 +59,7 @@ public class User {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", lending=" + lending +
+                ", lendings=" + lendings +
                 '}';
     }
 }

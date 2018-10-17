@@ -22,13 +22,24 @@
             </intent-filter>
         </activity>
         <activity android:name=".controller.SignUpActivity" />
-        <activity android:name=".controller.ListBoardgameToRentActivity" android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTop">
-            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable" />
-
+        <activity
+            android:name=".controller.ListBoardgameToRentActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".controller.DetailBoardgameActivity" />
         <activity android:name=".controller.CheckoutRentActivity" />
+        <activity
+            android:name=".ListBoardgames"
+            android:label="@string/title_activity_list_boardgames"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".LendsActivity"
+            android:label="@string/title_activity_lends"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

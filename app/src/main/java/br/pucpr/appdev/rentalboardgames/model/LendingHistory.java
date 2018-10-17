@@ -6,35 +6,23 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Date;
 
-import br.pucpr.appdev.rentalboardgames.view.BoardgameAdapter;
+public class LendingHistory {
 
-public class Lending {
-
-    private Boardgame boardgame;
+    private String boardgame;
     private Date startDate;
     private Date endDate;
+    private Date giveBackDate;
     private double totalRentValue;
 
-    public Boardgame getBoardgame() {
+    public String getBoardgame() {
         return boardgame;
     }
 
-    public void setBoardgameObj(Boardgame boardgame) {
+    public void setBoardgame(String boardgame) {
         this.boardgame = boardgame;
-    }
-
-    public void setBoardgame(DocumentReference reference) {
-        reference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                boardgame = task.getResult().toObject(Boardgame.class);
-            }
-        });
     }
 
     public Date getStartDate() {
@@ -59,5 +47,13 @@ public class Lending {
 
     public void setTotalRentValue(double totalRentValue) {
         this.totalRentValue = totalRentValue;
+    }
+
+    public Date getGiveBackDate() {
+        return giveBackDate;
+    }
+
+    public void setGiveBackDate(Date giveBackDate) {
+        this.giveBackDate = giveBackDate;
     }
 }

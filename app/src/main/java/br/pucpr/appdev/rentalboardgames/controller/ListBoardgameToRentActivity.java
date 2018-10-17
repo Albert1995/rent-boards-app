@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +16,14 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.SearchView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -52,6 +55,7 @@ public class ListBoardgameToRentActivity extends AppCompatActivity {
     GestureDetector gd;
     List<Boardgame> boardgames;
     SearchView searchView;
+    NavigationView nv;
 
     private int currentPage = 0;
 
@@ -144,6 +148,24 @@ public class ListBoardgameToRentActivity extends AppCompatActivity {
 
         drawer.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
+
+        nv = findViewById(R.id.nv);
+        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()) {
+                    case R.id.signout:
+                        FirebaseAuth.getInstance().signOut();
+                        break;
+                    case R.id.lends:
+                    case R.id.settings:
+                    case R.id.myAccount:
+                        Log.d(TAG, "onNavigationItemSelected: " + item.getItemId());
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     private void setUpRecyclerView() {
