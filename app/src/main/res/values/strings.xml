@@ -61,4 +61,11 @@
     <string name="tab_text_2">Histórico</string>
     <string name="tab_text_3">Tab 3</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="settings_notification">Desejo receber notificações sobre o vencimento dos emprétimos</string>
+    <string name="settings_frequency">Avisar quando faltar:</string>
+    <string-array name="settings_when_notify">
+        <item>2 dias</item>
+        <item>1 dia</item>
+        <item>No último dia</item>
+    </string-array>
 </resources>

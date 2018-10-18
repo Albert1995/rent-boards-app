@@ -39,7 +39,7 @@ public class LendHistoryAdapter
         holder.lblTitle.setText(model.getBoardgame());
         holder.lblTotalRentValue.setText(String.format("R$ %.2f", model.getTotalRentValue()));
         holder.lblStartDate.setText("Pego em " + new SimpleDateFormat("dd/MM/yyyy").format(model.getStartDate()));
-        holder.lblEndDate.setText("Devolver em " + new SimpleDateFormat("dd/MM/yyyy").format(model.getEndDate()));
+        holder.lblEndDate.setText("Devolvido em " + new SimpleDateFormat("dd/MM/yyyy").format(model.getEndDate()));
 
         /*StorageReference image = FirebaseStorage.getInstance().getReferenceFromUrl(model.getBoardgame().getImageURL());
         Glide.with(holder.itemView.getContext()).using(new FirebaseImageLoader()).load(image).into(holder.imgBoardgame);*/
