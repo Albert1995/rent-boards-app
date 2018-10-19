@@ -9,23 +9,25 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Lending {
 
-    private Boardgame boardgame;
+    private String boardgame;
     private Date startDate;
     private Date endDate;
     private Double totalRentValue;
 
-    public Boardgame getBoardgame() {
+    public String getBoardgame() {
         return boardgame;
     }
 
-    public void setBoardgameObj(Boardgame boardgame) {
+    public void setBoardgame(String boardgame) {
         this.boardgame = boardgame;
     }
 
-    public void setBoardgame(DocumentReference reference) {
+    /*public void setBoardgame(DocumentReference reference) {
         if (reference != null) {
             Log.d("MODEL", "setBoardgame: " + reference.getPath());
             reference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -38,7 +40,7 @@ public class Lending {
                 }
             });
         }
-    }
+    }*/
 
     public Date getStartDate() {
         return startDate;
@@ -62,6 +64,17 @@ public class Lending {
 
     public void setTotalRentValue(Double totalRentValue) {
         this.totalRentValue = totalRentValue;
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("boardgame", boardgame);
+        map.put("startDate", startDate);
+        map.put("endDate", endDate);
+        map.put("totalRentValue", totalRentValue);
+
+        return map;
     }
 
     @Override

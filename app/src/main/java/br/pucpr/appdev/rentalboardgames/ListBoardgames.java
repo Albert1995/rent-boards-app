@@ -155,6 +155,7 @@ public class ListBoardgames extends AppCompatActivity
                 if (reload) {
                     for (DocumentChange change : queryDocumentSnapshots.getDocumentChanges()) {
                         Boardgame b = change.getDocument().toObject(Boardgame.class);
+                        b.setId(change.getDocument().getId());
                         switch (change.getType()) {
                             case ADDED:
                                 if (!first)
@@ -278,7 +279,7 @@ public class ListBoardgames extends AppCompatActivity
 
             ((CustomApplication) getApplication()).setUser(null);
 
-            Intent i = new Intent(this, MainActivity.class);
+            Intent i = new Intent(this, StartActivity.class);
             startActivity(i);
             this.finish();
         } else if (id == R.id.nav_lends) {
@@ -286,7 +287,7 @@ public class ListBoardgames extends AppCompatActivity
             startActivity(i);
         /*} else if (id == R.id.nav_my_account) {*/
 
-        } else if (id == R.id.nav_settings) {
+        /*} else if (id == R.id.nav_settings) {*/
 
         }
 

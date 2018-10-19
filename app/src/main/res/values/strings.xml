@@ -1,15 +1,7 @@
 <resources>
     <string name="app_name">Rental Boardgames</string>
 
-    <string name="email">E-Mail</string>
-    <string name="password">Senha</string>
-    <string name="signin">Entrar</string>
-    <string name="signup">Cadastrar</string>
-    <string name="password_confirmation">Confirmar Senha</string>
-    <string name="cancel">Cancelar</string>
-    <string name="name">Nome</string>
-    <string name="cellphone">Celular</string>
-    <string name="signin_google">Entrar com a Conta Google</string>
+
     <string name="search">Pesquisar</string>
     <string name="avalible">Disponível</string>
     <string name="avalibles">Disponíveis</string>
@@ -68,4 +60,35 @@
         <item>1 dia</item>
         <item>No último dia</item>
     </string-array>
+    <string name="title_activity_login">Entrar</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+
+    <!-- DEFINITIVO -->
+
+    <string name="prefix_app_name">Rental</string>
+    <string name="sufix_app_name">Boardgames</string>
+
+    <string name="email">E-mail</string>
+    <string name="signin_google">Entrar com a Conta Google</string>
+    <string name="password">Senha</string>
+    <string name="signin">Entrar</string>
+    <string name="signup">Cadastrar</string>
+    <string name="password_confirmation">Confirmar Senha</string>
+    <string name="cancel">Cancelar</string>
+    <string name="name">Nome</string>
+    <string name="cellphone">Celular</string>
+
+
 </resources>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StartActivity">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gdHorizontal_img"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gdVertical_img"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gdHorizontal_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gdVertical_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gdHorizontal_progress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gdVertical_progress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4" />
+
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@mipmap/app_start"
+        app:layout_constraintBottom_toTopOf="@id/gdHorizontal_img"
+        app:layout_constraintLeft_toRightOf="@id/gdVertical_img"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/prefix_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/prefix_app_name"
+        android:textStyle="bold"
+        android:textSize="40sp"
+        android:textColor="#64b5f6"
+        app:layout_constraintTop_toBottomOf="@id/gdHorizontal_title"
+        app:layout_constraintLeft_toRightOf="@id/gdVertical_title"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sufix_app_name"
+        android:textStyle="bold"
+        android:textSize="40sp"
+        android:textColor="#64b5f6"
+        app:layout_constraintTop_toBottomOf="@id/prefix_title"
+        app:layout_constraintLeft_toRightOf="@id/gdVertical_title"
+        />
+
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/signin"
+        app:layout_constraintTop_toBottomOf="@+id/gdHorizontal_progress"
+        android:background="@color/fui_bgPhone"
+        android:layout_margin="15dp"
+        android:visibility="gone"
+        />
+
+    <Button
+        android:id="@+id/btnSignInGoogle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/signin_google"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignIn"
+        android:background="@color/fui_bgPhone"
+        android:layout_margin="15dp"
+        android:visibility="gone"
+        />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/gdHorizontal_progress"
+        android:visibility="gone"
+        />
+
+
+</android.support.constraint.ConstraintLayout>

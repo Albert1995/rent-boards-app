@@ -2,6 +2,8 @@ package br.pucpr.appdev.rentalboardgames.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Rental implements Serializable {
 
@@ -31,6 +33,16 @@ public class Rental implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("user", user);
+        map.put("startDate", startDate);
+        map.put("endDate", endDate);
+
+        return map;
     }
 
     @Override

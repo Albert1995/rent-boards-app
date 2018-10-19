@@ -14,6 +14,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -27,7 +31,7 @@ import br.pucpr.appdev.rentalboardgames.model.Lending;
 
 public class LendAdapter
         extends RecyclerView.Adapter<LendAdapter.LendHolder>
-        /*implements Filterable*/ {
+         {
 
     private static final String TAG = "BOARD-LEND";
     private List<Lending> lendings;
@@ -37,15 +41,24 @@ public class LendAdapter
         this.lendings = lendings;
     }
 
-    protected void onBindViewHolder(LendHolder holder, int position, Lending model) {
+    protected void onBindViewHolder(final LendHolder holder, int position, Lending model) {
         Log.d(TAG, "onBindViewHolder: " + model.toString());
-        holder.lblTitle.setText(model.getBoardgame().getName());
+
+        FirebaseFirestore.getInstance().collection("boardgames").document(model.getBoardgame()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                holder.lblTitle.setText(task.getResult().getString("name"));
+
+                StorageReference image = FirebaseStorage.getInstance().getReferenceFromUrl(task.getResult().getString("imageURL"));
+                Glide.with(holder.itemView.getContext()).using(new FirebaseImageLoader()).load(image).into(holder.imgBoardgame);
+            }
+        });
+
         holder.lblTotalRentValue.setText(String.format("R$ %.2f", model.getTotalRentValue()));
         holder.lblStartDate.setText("Pego em " + new SimpleDateFormat("dd/MM/yyyy").format(model.getStartDate()));
         holder.lblEndDate.setText("Devolver em " + new SimpleDateFormat("dd/MM/yyyy").format(model.getEndDate()));
 
-        StorageReference image = FirebaseStorage.getInstance().getReferenceFromUrl(model.getBoardgame().getImageURL());
-        Glide.with(holder.itemView.getContext()).using(new FirebaseImageLoader()).load(image).into(holder.imgBoardgame);
+
     }
 
     @Override

@@ -133,12 +133,12 @@ public class Boardgame implements Serializable {
         return count;
     }
 
-    public int getRentAvailable() {
+    public boolean isAvalibleToRent() {
         for (int i = 0; i < rentals.size(); i++) {
             if (rentals.get(i).getUser() == null)
-                return i;
+                return true;
         }
-        return -1;
+        return false;
     }
 
     public void newRent(User user, Date start, Date end) {
@@ -147,9 +147,31 @@ public class Boardgame implements Serializable {
                 rental.setUser(user.getId());
                 rental.setStartDate(start);
                 rental.setEndDate(end);
+                break;
             }
-
         }
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("name",name);
+        map.put("description",description);
+        map.put("playersMin", playersMin);
+        map.put("playersMax", playersMax);
+        map.put("playingTimeMin", playingTimeMin);
+        map.put("playingTimeMax", playingTimeMax);
+        map.put("age", age);
+        map.put("rentPrice", rentPrice);
+        map.put("imageURL", imageURL);
+
+        List<Map<String, Object>> rentalsMap = new ArrayList<>();
+        for (Rental r : rentals) {
+            rentalsMap.add(r.toMap());
+        }
+        map.put("rentals", rentalsMap);
+
+        return map;
     }
 
     public List<Map<String, Object>> getArrayRentals() {
